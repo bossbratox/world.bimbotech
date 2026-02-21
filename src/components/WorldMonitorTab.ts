@@ -107,7 +107,7 @@ export class WorldMonitorTab {
   }
 
   hasPendingChanges(): boolean {
-    return this.pendingKeyValue !== null && this.pendingKeyValue.length > 0;
+    return this.pendingKeyValue !== null;
   }
 
   async save(): Promise<void> {
