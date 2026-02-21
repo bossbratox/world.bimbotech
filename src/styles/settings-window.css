@@ -692,11 +692,6 @@ tr.diag-err td { color: var(--settings-red); }
   background: rgba(251, 191, 36, 0.12);
 }
 
-.wm-badge.error {
-  color: var(--settings-red);
-  background: rgba(248, 113, 113, 0.12);
-}
-
 .wm-register-row {
   display: flex;
   gap: 10px;

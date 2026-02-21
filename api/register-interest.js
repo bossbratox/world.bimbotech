@@ -60,30 +60,9 @@ export default async function handler(req) {
     });
   }
 
-  if (!body || typeof body !== 'object' || Array.isArray(body)) {
-    return new Response(JSON.stringify({ error: 'Invalid request payload' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json', ...cors },
-    });
-  }
-
   const { email, source, appVersion } = body;
   if (!email || typeof email !== 'string' || email.length > MAX_EMAIL_LENGTH || !EMAIL_RE.test(email)) {
     return new Response(JSON.stringify({ error: 'Invalid email address' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json', ...cors },
-    });
-  }
-
-  if (source !== undefined && typeof source !== 'string') {
-    return new Response(JSON.stringify({ error: 'Invalid source' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json', ...cors },
-    });
-  }
-
-  if (appVersion !== undefined && typeof appVersion !== 'string') {
-    return new Response(JSON.stringify({ error: 'Invalid appVersion' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json', ...cors },
     });
@@ -101,8 +80,8 @@ export default async function handler(req) {
     const client = new ConvexHttpClient(convexUrl);
     const result = await client.mutation('registerInterest:register', {
       email,
-      source: source?.trim() || 'unknown',
-      appVersion: appVersion?.trim() || 'unknown',
+      source: source || 'unknown',
+      appVersion: appVersion || 'unknown',
     });
     return new Response(JSON.stringify(result), {
       status: 200,

@@ -20,12 +20,10 @@ export class WorldMonitorTab {
 
   private render(): void {
     const state = getSecretState(WM_KEY);
-    const statusText = state.valid
+    const statusText = state.present
       ? t('modals.settingsWindow.worldMonitor.apiKey.statusValid')
-      : state.present
-      ? t('modals.settingsWindow.worldMonitor.apiKey.statusInvalid')
       : t('modals.settingsWindow.worldMonitor.apiKey.statusMissing');
-    const statusClass = state.valid ? 'ok' : state.present ? 'error' : 'warn';
+    const statusClass = state.present ? 'ok' : 'warn';
 
     this.el.innerHTML = `
       <section class="wm-section">
@@ -109,7 +107,7 @@ export class WorldMonitorTab {
   }
 
   hasPendingChanges(): boolean {
-    return this.pendingKeyValue !== null;
+    return this.pendingKeyValue !== null && this.pendingKeyValue.length > 0;
   }
 
   async save(): Promise<void> {
@@ -117,12 +115,10 @@ export class WorldMonitorTab {
     await setSecretValue(WM_KEY, this.pendingKeyValue);
     this.pendingKeyValue = null;
     const state = getSecretState(WM_KEY);
-    this.keyBadge.textContent = state.valid
+    this.keyBadge.textContent = state.present
       ? t('modals.settingsWindow.worldMonitor.apiKey.statusValid')
-      : state.present
-      ? t('modals.settingsWindow.worldMonitor.apiKey.statusInvalid')
       : t('modals.settingsWindow.worldMonitor.apiKey.statusMissing');
-    this.keyBadge.className = `wm-badge ${state.valid ? 'ok' : state.present ? 'error' : 'warn'}`;
+    this.keyBadge.className = `wm-badge ${state.present ? 'ok' : 'warn'}`;
   }
 
   getElement(): HTMLElement {

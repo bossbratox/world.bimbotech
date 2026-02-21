@@ -295,7 +295,6 @@
           "placeholder": "Enter your WorldMonitor API key",
           "description": "Required for cloud fallback access from the desktop app.",
           "statusValid": "Key set",
-          "statusInvalid": "Key invalid",
           "statusMissing": "No key configured"
         },
         "register": {
